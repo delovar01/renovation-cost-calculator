@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Калькулятор стоимости ремонта</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="calc">
+    <header class="calc__header">
+      <h1 class="calc__title">Калькулятор стоимости ремонта</h1>
+      <p class="calc__subtitle">Рассчитайте бюджет за 2 минуты — без звонков и регистрации</p>
+    </header>
+
+    <div class="progress">
+      <div class="progress__bar"><div class="progress__fill" id="progressFill"></div></div>
+      <div class="progress__steps" id="progressSteps">
+        <span class="progress__step is-active" data-step="1">Помещение</span>
+        <span class="progress__step" data-step="2">Тип ремонта</span>
+        <span class="progress__step" data-step="3">Комнаты</span>
+        <span class="progress__step" data-step="4">Дополнительно</span>
+        <span class="progress__step" data-step="5">Результат</span>
+      </div>
+    </div>
+
+    <form class="calc__form" id="calcForm" onsubmit="return false;">
+
+      <!-- STEP 1 -->
+      <section class="step is-active" data-step="1">
+        <h2 class="step__title">Тип помещения и площадь</h2>
+        <p class="step__hint">Выберите, что именно вы хотите отремонтировать</p>
+
+        <div class="cards" role="radiogroup" aria-label="Тип помещения">
+          <label class="card">
+            <input type="radio" name="propertyType" value="apartment" checked />
+            <span class="card__icon">🏢</span>
+            <span class="card__label">Квартира</span>
+          </label>
+          <label class="card">
+            <input type="radio" name="propertyType" value="house" />
+            <span class="card__icon">🏡</span>
+            <span class="card__label">Частный дом</span>
+          </label>
+          <label class="card">
+            <input type="radio" name="propertyType" value="office" />
+            <span class="card__icon">🏬</span>
+            <span class="card__label">Офис</span>
+          </label>
+          <label class="card">
+            <input type="radio" name="propertyType" value="commercial" />
+            <span class="card__icon">🏪</span>
+            <span class="card__label">Коммерческое</span>
+          </label>
+        </div>
+
+        <div class="slider-block">
+          <div class="slider-block__head">
+            <span class="slider-block__label">Площадь</span>
+            <span class="slider-block__value"><span id="areaValue">60</span> м²</span>
+          </div>
+          <input type="range" id="area" min="20" max="500" step="1" value="60" class="slider" />
+          <div class="slider-block__legend">
+            <span>20 м²</span>
+            <span>500 м²</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <span></span>
+          <button type="button" class="btn btn--primary" data-next>Далее →</button>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step" data-step="2">
+        <h2 class="step__title">Тип ремонта</h2>
+        <p class="step__hint">От базового обновления до авторского проекта</p>
+
+        <div class="options" role="radiogroup" aria-label="Тип ремонта">
+          <label class="option">
+            <input type="radio" name="renovationType" value="cosmetic" checked />
+            <div class="option__body">
+              <div class="option__head">
+                <span class="option__title">Косметический</span>
+                <span class="option__price">от 4 500 ₽/м²</span>
+              </div>
+              <p class="option__desc">Замена отделки: обои, покраска, пол, потолок. Без демонтажа и коммуникаций.</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="renovationType" value="standard" />
+            <div class="option__body">
+              <div class="option__head">
+                <span class="option__title">Стандартный</span>
+                <span class="option__price">от 8 500 ₽/м²</span>
+              </div>
+              <p class="option__desc">С заменой коммуникаций: электрика, сантехника, стяжка, качественные материалы среднего сегмента.</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="renovationType" value="euro" />
+            <div class="option__body">
+              <div class="option__head">
+                <span class="option__title">Евроремонт</span>
+                <span class="option__price">от 16 000 ₽/м²</span>
+              </div>
+              <p class="option__desc">Высококачественные материалы, сложная геометрия, многоуровневые потолки, скрытая разводка.</p>
+            </div>
+          </label>
+          <label class="option">
+            <input type="radio" name="renovationType" value="premium" />
+            <div class="option__body">
+              <div class="option__head">
+                <span class="option__title">Дизайнерский</span>
+                <span class="option__price">от 35 000 ₽/м²</span>
+              </div>
+              <p class="option__desc">Премиум-материалы, авторский проект, индивидуальная мебель, сложные инженерные решения.</p>
+            </div>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn--ghost" data-prev>← Назад</button>
+          <button type="button" class="btn btn--primary" data-next>Далее →</button>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step" data-step="3">
+        <h2 class="step__title">Какие помещения ремонтируем?</h2>
+        <p class="step__hint">Отметьте все, что нужно — это уточнит смету</p>
+
+        <div class="chips">
+          <label class="chip"><input type="checkbox" name="rooms" value="kitchen" checked /><span>🍳 Кухня</span></label>
+          <label class="chip"><input type="checkbox" name="rooms" value="bathroom" checked /><span>🛁 Ванная</span></label>
+          <label class="chip"><input type="checkbox" name="rooms" value="toilet" /><span>🚽 Туалет</span></label>
+          <label class="chip"><input type="checkbox" name="rooms" value="bedroom" checked /><span>🛏️ Спальня</span></label>
+          <label class="chip"><input type="checkbox" name="rooms" value="livingroom" checked /><span>🛋️ Гостиная</span></label>
+          <label class="chip"><input type="checkbox" name="rooms" value="hallway" /><span>🚪 Коридор</span></label>
+          <label class="chip"><input type="checkbox" name="rooms" value="balcony" /><span>🌇 Балкон</span></label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn--ghost" data-prev>← Назад</button>
+          <button type="button" class="btn btn--primary" data-next>Далее →</button>
+        </div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step" data-step="4">
+        <h2 class="step__title">Дополнительные услуги</h2>
+        <p class="step__hint">Что ещё учесть в расчёте?</p>
+
+        <div class="toggles">
+          <label class="toggle">
+            <input type="checkbox" name="design" />
+            <span class="toggle__track"></span>
+            <span class="toggle__info">
+              <span class="toggle__title">Дизайн-проект</span>
+              <span class="toggle__desc">3D-визуализация, чертежи, подбор материалов (+8%)</span>
+            </span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" name="demolition" />
+            <span class="toggle__track"></span>
+            <span class="toggle__info">
+              <span class="toggle__title">Снос стен / перепланировка</span>
+              <span class="toggle__desc">Демонтаж перегородок, согласование (+5%)</span>
+            </span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" name="warmfloor" />
+            <span class="toggle__track"></span>
+            <span class="toggle__info">
+              <span class="toggle__title">Тёплый пол</span>
+              <span class="toggle__desc">Электрический или водяной контур (+7%)</span>
+            </span>
+          </label>
+          <label class="toggle">
+            <input type="checkbox" name="smarthome" />
+            <span class="toggle__track"></span>
+            <span class="toggle__info">
+              <span class="toggle__title">Умный дом</span>
+              <span class="toggle__desc">Сценарии, датчики, управление со смартфона (+15%)</span>
+            </span>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn btn--ghost" data-prev>← Назад</button>
+          <button type="button" class="btn btn--primary" data-next>Рассчитать →</button>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step" data-step="5">
+        <h2 class="step__title">Ваша предварительная смета</h2>
+        <p class="step__hint">Цифры ориентировочные — точный расчёт мастер сделает после замера</p>
+
+        <div class="result">
+          <div class="result__main">
+            <span class="result__label">Стоимость ремонта</span>
+            <span class="result__price" id="priceRange">— ₽</span>
+            <div class="result__meta">
+              <div class="result__meta-item">
+                <span class="result__meta-label">Срок выполнения</span>
+                <span class="result__meta-value" id="timeline">—</span>
+              </div>
+              <div class="result__meta-item">
+                <span class="result__meta-label">Площадь</span>
+                <span class="result__meta-value" id="areaOut">—</span>
+              </div>
+              <div class="result__meta-item">
+                <span class="result__meta-label">Тип ремонта</span>
+                <span class="result__meta-value" id="typeOut">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="result__breakdown">
+            <h3 class="result__breakdown-title">Детальная смета</h3>
+            <ul class="breakdown" id="breakdown"></ul>
+          </div>
+        </div>
+
+        <div class="actions actions--result">
+          <button type="button" class="btn btn--ghost" data-prev>← Изменить параметры</button>
+          <button type="button" class="btn btn--secondary" id="pdfBtn">📄 Скачать смету PDF</button>
+          <button type="button" class="btn btn--primary" id="leadBtn">Получить точный расчёт</button>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- Lead form modal -->
+    <div class="modal" id="leadModal" aria-hidden="true">
+      <div class="modal__backdrop" data-close-modal></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+        <button type="button" class="modal__close" data-close-modal aria-label="Закрыть">×</button>
+        <h3 class="modal__title" id="leadTitle">Получите точный расчёт</h3>
+        <p class="modal__text">Оставьте контакты — инженер перезвонит в течение 15 минут и уточнит детали бесплатно.</p>
+        <form class="lead" id="leadForm">
+          <label class="field">
+            <span class="field__label">Ваше имя</span>
+            <input type="text" name="name" required placeholder="Как к вам обращаться?" />
+          </label>
+          <label class="field">
+            <span class="field__label">Телефон</span>
+            <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__" />
+          </label>
+          <button type="submit" class="btn btn--primary btn--wide">Отправить заявку</button>
+          <p class="lead__note">Нажимая «Отправить», вы соглашаетесь с обработкой персональных данных.</p>
+        </form>
+        <div class="lead__success" id="leadSuccess" hidden>
+          <div class="lead__check">✓</div>
+          <h3>Заявка принята!</h3>
+          <p>Мы свяжемся с вами в течение 15 минут.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="calc__footer">
+      <span>Расчёт носит ориентировочный характер. Итоговая стоимость — после замера.</span>
+    </footer>
+  </main>
+
+  <script src="calculator.js"></script>
+</body>
+</html>
